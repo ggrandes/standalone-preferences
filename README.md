@@ -46,6 +46,7 @@ org.infra.preferences.example.mykey=my-config-value
 java \
   -cp standalone-preferences-X.X.X.jar \
   -Djava.util.prefs.PreferencesFactory=org.infra.preferences.StandalonePreferencesFactory \
+  -Dorg.infra.preferences.source=/home/java/sysprefs.properties \
   org.infra.preferences.example.Example
 ```
 
