@@ -18,6 +18,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.infra.preferences.MapExpression.InvalidExpression;
+import org.infra.preferences.MapExpression.SystemPropertyMapper;
 
 /**
  * The <code>StringProperties</code> class represents a persistent set of string properties. The
@@ -59,6 +60,7 @@ class StringProperties {
 	final LinkedHashMap<String, String> map;
 	final StringMapPersist persist;
 	final String rootPrefix;
+	final MapExpression.MultiMapper mapper;
 
 	public StringProperties() {
 		this(new LinkedHashMap<String, String>(), null);
@@ -72,6 +74,7 @@ class StringProperties {
 		this.map = map;
 		this.persist = new StringMapPersist(map);
 		this.rootPrefix = ((rootPrefix != null) && rootPrefix.isEmpty() ? null : rootPrefix);
+		this.mapper = new MapExpression.MultiMapper().add(SystemPropertyMapper.getInstance()).add(new MapExpression.StringPropertyMapper(this));
 	}
 
 	private static final String appendPrefix(final String rootPrefix, final String prefix) {
@@ -186,10 +189,10 @@ class StringProperties {
 
 	// GET with MapExpression
 
-	private static final String eval(final String str) throws InvalidExpression {
+	private final String eval(final String str) throws InvalidExpression {
 		if (str == null)
 			return null;
-		return new MapExpression(str).eval().get();
+		return new MapExpression(str, null, mapper, false).eval().get();
 	}
 
 	public String getPropertyEval(final String key) throws InvalidExpression {

@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import java.util.prefs.AbstractPreferences;
 import java.util.prefs.BackingStoreException;
 
+import org.infra.preferences.MapExpression.InvalidExpression;
+
 /**
  * Usage:
  * 
@@ -81,7 +83,12 @@ public class StandalonePreferences extends AbstractPreferences {
 
 	@Override
 	protected String getSpi(final String key) {
-		return data.getProperty(key);
+		try {
+			return data.getPropertyEval(key);
+		} catch (InvalidExpression e) {
+			log.log(Level.WARNING, "Error in eval of " + absolutePath() + "/" + key + ": " + e.toString());
+			return data.getProperty(key);
+		}
 	}
 
 	@Override

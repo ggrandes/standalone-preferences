@@ -11,5 +11,7 @@ public class Example {
 		System.out.println(config.get("mykey", "my-default-value1"));
 		System.out.println(config.get("mykey2", "my-default-value2"));
 		System.out.println(config.get("other.key", "my-default-value3"));
+		System.out.println(config.get("urlbase", "my-default-value4"));
+		System.out.println(config.get("urlsearch", "my-default-value5"));
 	}
 }

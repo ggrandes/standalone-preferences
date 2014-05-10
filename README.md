@@ -25,6 +25,8 @@ public class Example {
 		System.out.println(config.get("mykey", "my-default-value1"));
 		System.out.println(config.get("mykey2", "my-default-value2"));
 		System.out.println(config.get("other.key", "my-default-value3"));
+		System.out.println(config.get("urlbase", "my-default-value4"));
+		System.out.println(config.get("urlsearch", "my-default-value5"));
 	}
 }
 ```
@@ -37,6 +39,8 @@ public class Example {
 ```properties
 org.infra.preferences.example.mykey=my-config-value
 org.infra.preferences.example.other.key=my-config-value-for-other
+org.infra.preferences.example.urlbase=https://www.acme.com
+org.infra.preferences.example.urlsearch=${urlbase}/search?user=${user.name}
 ```
 
 
@@ -51,6 +55,16 @@ org.infra.preferences.example.other.key=my-config-value-for-other
 java -cp standalone-preferences-X.X.X.jar org.infra.preferences.example.Example
 ```
 
+
+#### Sample Output
+
+```
+my-config-value
+my-default-value2
+my-config-value-for-other
+https://www.acme.com
+https://www.acme.com/search?user=developer
+```
 
 ---
 

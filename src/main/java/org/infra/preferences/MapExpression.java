@@ -252,6 +252,19 @@ class MapExpression {
 		}
 	}
 
+	public static class StringPropertyMapper implements Mapper {
+		private final StringProperties prop;
+
+		public StringPropertyMapper(final StringProperties prop) {
+			this.prop = prop;
+		}
+
+		@Override
+		public String map(final String propName) {
+			return prop.getProperty(propName);
+		}
+	}
+	
 	public static class MultiMapper implements Mapper {
 		private final List<Mapper> mappers;
 
