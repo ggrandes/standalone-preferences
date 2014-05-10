@@ -26,15 +26,27 @@ import org.infra.preferences.MapExpression.InvalidExpression;
  */
 public class StandalonePreferences extends AbstractPreferences {
 	private static final Logger log = Logger.getLogger(StandalonePreferences.class.getName());
-	private static final String PROP_SOURCE;
+	private static final String packageName = StandalonePreferences.class.getPackage().getName();
+	private static final String PROP_SOURCE_NAME = packageName + ".source";
+	private static final String PROP_EVAL_DISABLED_NAME = packageName + ".evalget.disabled";
 	private static final File PROP_SOURCE_DEF_VALUE;
 	private static final File SOURCE_FILE;
+	private static final boolean PROP_EVAL_DISABLED;
 	private final StringProperties data;
 
 	static {
-		PROP_SOURCE = StandalonePreferences.class.getPackage().getName() + ".source";
 		PROP_SOURCE_DEF_VALUE = new File(System.getProperty("user.home"), "sysprefs.properties");
-		SOURCE_FILE = new File(System.getProperty(PROP_SOURCE, PROP_SOURCE_DEF_VALUE.getAbsolutePath()));
+		PROP_EVAL_DISABLED = Boolean.getBoolean(PROP_EVAL_DISABLED_NAME);
+		String source = System.getProperty(PROP_SOURCE_NAME);
+		if (source != null) {
+			try {
+				source = new MapExpression(source).eval().get();
+			} catch (InvalidExpression e) {
+				log.log(Level.WARNING, "Error in eval of " + source + ": " + e.toString());
+				source = null;
+			}
+		}
+		SOURCE_FILE = (source != null ? new File(source) : PROP_SOURCE_DEF_VALUE);
 	}
 
 	protected StandalonePreferences(final StandalonePreferences parent, final String name) {
@@ -53,7 +65,8 @@ public class StandalonePreferences extends AbstractPreferences {
 			is = new FileInputStream(SOURCE_FILE);
 			data.getRootView().load(is);
 		} catch (IOException e) {
-			log.log(Level.WARNING, "Error loading StandalonePreferences: " + e.toString());
+			log.log(Level.WARNING, "Error loading StandalonePreferences from file " + //
+					SOURCE_FILE + ": " + e.toString());
 		} finally {
 			try {
 				if (is != null)
@@ -83,6 +96,8 @@ public class StandalonePreferences extends AbstractPreferences {
 
 	@Override
 	protected String getSpi(final String key) {
+		if (PROP_EVAL_DISABLED)
+			return data.getProperty(key);
 		try {
 			return data.getPropertyEval(key);
 		} catch (InvalidExpression e) {

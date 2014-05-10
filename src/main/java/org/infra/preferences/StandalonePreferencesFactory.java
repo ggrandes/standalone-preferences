@@ -5,9 +5,11 @@ import java.util.prefs.PreferencesFactory;
 
 /**
  * Usage:
+ * 
  * <pre>
  * -Djava.util.prefs.PreferencesFactory=org.infra.preferences.StandalonePreferencesFactory
  * </pre>
+ * 
  * @see StandalonePreferences
  */
 public class StandalonePreferencesFactory implements PreferencesFactory {

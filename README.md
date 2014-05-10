@@ -6,13 +6,24 @@ Java Preferences API Implementation on Filesystem. Open Source Java project unde
 
 ---
 
+## Features
+
+ - No external dependencies
+ - Allow eval of get with System Properties and Back reference with ```${tagname}```
+ - Allow disable eval on get (see configuration)
+
 ## DOC
 
 
-#### Features
+#### Configuration: System Properties
 
- - Allow evaluate System Properties and Back references with ```${tagname}```
- - No external dependencies
+
+ - Standard Java Preferences API for select the factory: ```java.util.prefs.PreferencesFactory```
+   - Example: -Djava.util.prefs.PreferencesFactory=org.infra.preferences.StandalonePreferencesFactory
+ - Select source of System Preferences: ```org.infra.preferences.source=filename``` (allow evaluation)
+   - Example: -Dorg.infra.preferences.source=${user.home}/mypreferences.properties
+   - Default value: ${user.home}/sysprefs.properties   
+ - For disable Eval of get: ```org.infra.preferences.evalget.disabled=true```
 
 
 #### Usage Example
@@ -40,7 +51,7 @@ public class Example {
 * More info: [Preferences API](http://docs.oracle.com/javase/7/docs/api/java/util/prefs/Preferences.html)
 
 
-#### Sample Config ```${user.home}/sysprefs.properties```
+#### Example Config ```${user.home}/sysprefs.properties```
 
 ```properties
 org.infra.preferences.example.mykey=my-config-value
@@ -53,11 +64,6 @@ org.infra.preferences.example.urlsearch=${urlbase}/search?user=${user.name}
 #### Running
 
 ```
-# Options:
-# -Djava.util.prefs.PreferencesFactory=org.infra.preferences.StandalonePreferencesFactory
-# -Dorg.infra.preferences.source=filename
-#
-# Default config: ${user.home}/sysprefs.properties
 java -cp standalone-preferences-X.X.X.jar org.infra.preferences.example.Example
 ```
 

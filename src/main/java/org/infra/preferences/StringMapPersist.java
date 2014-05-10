@@ -421,45 +421,45 @@ class StringMapPersist {
 				continue;
 			}
 			switch (aChar) {
-			case ' ':
-				if (x == 0 || escapeSpace)
+				case ' ':
+					if (x == 0 || escapeSpace)
+						outBuffer.append('\\');
+					outBuffer.append(' ');
+					break;
+				case '\t':
 					outBuffer.append('\\');
-				outBuffer.append(' ');
-				break;
-			case '\t':
-				outBuffer.append('\\');
-				outBuffer.append('t');
-				break;
-			case '\n':
-				outBuffer.append('\\');
-				outBuffer.append('n');
-				break;
-			case '\r':
-				outBuffer.append('\\');
-				outBuffer.append('r');
-				break;
-			case '\f':
-				outBuffer.append('\\');
-				outBuffer.append('f');
-				break;
-			case '=': // Fall through
-			case ':': // Fall through
-			case '#': // Fall through
-			case '!':
-				outBuffer.append('\\');
-				outBuffer.append(aChar);
-				break;
-			default:
-				if (((aChar < 0x0020) || (aChar > 0x007e)) & escapeUnicode) {
+					outBuffer.append('t');
+					break;
+				case '\n':
 					outBuffer.append('\\');
-					outBuffer.append('u');
-					outBuffer.append(toHex((aChar >> 12) & 0xF));
-					outBuffer.append(toHex((aChar >> 8) & 0xF));
-					outBuffer.append(toHex((aChar >> 4) & 0xF));
-					outBuffer.append(toHex(aChar & 0xF));
-				} else {
+					outBuffer.append('n');
+					break;
+				case '\r':
+					outBuffer.append('\\');
+					outBuffer.append('r');
+					break;
+				case '\f':
+					outBuffer.append('\\');
+					outBuffer.append('f');
+					break;
+				case '=': // Fall through
+				case ':': // Fall through
+				case '#': // Fall through
+				case '!':
+					outBuffer.append('\\');
 					outBuffer.append(aChar);
-				}
+					break;
+				default:
+					if (((aChar < 0x0020) || (aChar > 0x007e)) & escapeUnicode) {
+						outBuffer.append('\\');
+						outBuffer.append('u');
+						outBuffer.append(toHex((aChar >> 12) & 0xF));
+						outBuffer.append(toHex((aChar >> 8) & 0xF));
+						outBuffer.append(toHex((aChar >> 4) & 0xF));
+						outBuffer.append(toHex(aChar & 0xF));
+					} else {
+						outBuffer.append(aChar);
+					}
 			}
 		}
 		return outBuffer.toString();
@@ -504,8 +504,9 @@ class StringMapPersist {
 	}
 
 	/** A table of hex digits */
-	private static final char[] hexDigit = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C',
-			'D', 'E', 'F' };
+	private static final char[] hexDigit = {
+			'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
+	};
 
 	/**
 	 * Convert a nibble to a hex character

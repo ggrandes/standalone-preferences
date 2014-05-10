@@ -74,7 +74,8 @@ class StringProperties {
 		this.map = map;
 		this.persist = new StringMapPersist(map);
 		this.rootPrefix = ((rootPrefix != null) && rootPrefix.isEmpty() ? null : rootPrefix);
-		this.mapper = new MapExpression.MultiMapper().add(SystemPropertyMapper.getInstance()).add(new MapExpression.StringPropertyMapper(this));
+		this.mapper = new MapExpression.MultiMapper().add(SystemPropertyMapper.getInstance()).add(
+				new MapExpression.StringPropertyMapper(this));
 	}
 
 	private static final String appendPrefix(final String rootPrefix, final String prefix) {
