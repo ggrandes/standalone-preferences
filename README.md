@@ -40,14 +40,12 @@ org.infra.preferences.example.mykey=my-config-value
 #### Running
 
 ```
+# Options:
 # -Djava.util.prefs.PreferencesFactory=org.infra.preferences.StandalonePreferencesFactory
 # -Dorg.infra.preferences.source=filename
-# Default file: ${user.home}/sysprefs.properties
-java \
-  -cp standalone-preferences-X.X.X.jar \
-  -Djava.util.prefs.PreferencesFactory=org.infra.preferences.StandalonePreferencesFactory \
-  -Dorg.infra.preferences.source=/home/java/sysprefs.properties \
-  org.infra.preferences.example.Example
+#
+# Default config: ${user.home}/sysprefs.properties
+java -cp standalone-preferences-X.X.X.jar org.infra.preferences.example.Example
 ```
 
 
