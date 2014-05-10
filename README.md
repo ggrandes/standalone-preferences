@@ -22,7 +22,9 @@ public class Example {
 	 */
 	public static void main(final String[] args) throws Throwable {
 		final Preferences config = Preferences.systemNodeForPackage(Example.class);
-		System.out.println(config.get("mykey", "my-default-value"));
+		System.out.println(config.get("mykey", "my-default-value1"));
+		System.out.println(config.get("mykey2", "my-default-value2"));
+		System.out.println(config.get("other.key", "my-default-value3"));
 	}
 }
 ```
@@ -34,6 +36,7 @@ public class Example {
 
 ```properties
 org.infra.preferences.example.mykey=my-config-value
+org.infra.preferences.example.other.key=my-config-value-for-other
 ```
 
 
