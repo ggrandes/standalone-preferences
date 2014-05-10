@@ -11,6 +11,7 @@ Java Preferences API Implementation on Filesystem. Open Source Java project unde
  - No external dependencies
  - Allow eval of get with System Properties and Back reference with ```${tagname}```
  - Allow disable eval on get (see configuration)
+ - User Preferences are NOT supported (intentionally)
 
 ## DOC
 
