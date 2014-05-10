@@ -27,6 +27,7 @@
 					<forceCreation>true</forceCreation>
 					<excludes>
 						<exclude>**/log4j.properties</exclude>
+						<exclude>**/sandbox/*</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
@@ -67,5 +68,28 @@
 				</configuration>
 			</plugin>
 		</plugins>
+
+		<!-- Deployment Maven-S3 -->
+		<extensions>
+			<extension>
+				<groupId>org.springframework.build</groupId>
+				<artifactId>aws-maven</artifactId>
+				<version>4.4.0.RELEASE</version>
+			</extension>
+		</extensions>
 	</build>
+
+	<!-- Deployment -->
+	<distributionManagement>
+		<repository>
+			<id>maven-s3-release-repo</id>
+			<name>S3 Release Repository</name>
+			<url>s3://maven-release/release</url>
+		</repository>
+		<snapshotRepository>
+			<id>maven-s3-snapshot-repo</id>
+			<name>S3 Snapshot Repository</name>
+			<url>s3://maven-snapshot/snapshot</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
