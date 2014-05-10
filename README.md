@@ -9,6 +9,12 @@ Java Preferences API Implementation on Filesystem. Open Source Java project unde
 ## DOC
 
 
+#### Features
+
+ - Allow evaluate System Properties and Back references with ```${tagname}```
+ - No external dependencies
+
+
 #### Usage Example
 
 ```java
