@@ -1,0 +1,71 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.infra</groupId>
+	<artifactId>standalone-preferences</artifactId>
+	<version>1.0.0</version>
+	<description>Java Preferences API Implementation on Filesystem</description>
+
+	<dependencies>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<finalName>${project.artifactId}-${project.version}</finalName>
+					<forceCreation>true</forceCreation>
+					<excludes>
+						<exclude>**/log4j.properties</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<!-- Package source to JAR to upload to repo -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.0.4</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Package JavaDocs to JAR to upload to repo -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<tags>
+						<tag>
+							<name>threadSafe</name>
+							<placement>a</placement>
+							<head>ThreadSafe:</head>
+						</tag>
+					</tags>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
