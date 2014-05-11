@@ -11,19 +11,20 @@ class EmptyPreferences extends AbstractPreferences {
 		super(null, "");
 	}
 
+	protected EmptyPreferences(final AbstractPreferences parent, final String name) {
+		super(parent, name);
+	}
+
 	@Override
 	protected void removeSpi(String key) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	protected void removeNodeSpi() throws BackingStoreException {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	protected void putSpi(final String key, final String value) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -33,7 +34,7 @@ class EmptyPreferences extends AbstractPreferences {
 
 	@Override
 	protected String getSpi(final String key) {
-		throw new UnsupportedOperationException();
+		throw null;
 	}
 
 	@Override
@@ -51,6 +52,6 @@ class EmptyPreferences extends AbstractPreferences {
 
 	@Override
 	protected AbstractPreferences childSpi(final String name) {
-		throw new UnsupportedOperationException();
+		return new EmptyPreferences(this, name);
 	}
 }
