@@ -8,11 +8,12 @@ Java Preferences API Implementation on Filesystem. Open Source Java project unde
 
 ## Features
 
- - No external dependencies
+ - No external dependencies.
  - Allow eval of get with System Properties and Back reference with ```${tagname}```
- - Allow disable eval on get (see configuration)
- - Config file per package
- - User Preferences are NOT supported (intentionally)
+ - Allow disable eval on get (see configuration).
+ - Config file per package.
+ - System Preferences are supported, YES.
+ - User Preferences are NOT supported (intentionally).
 
 ## DOC
 
@@ -65,7 +66,7 @@ urlsearch=${urlbase}/search?user=${user.name}
 ```
 
 
-#### Running
+#### Running standalone
 
 ```
 java -cp standalone-preferences-X.X.X.jar org.infra.preferences.example.Example
@@ -81,6 +82,16 @@ my-config-value-for-other
 https://www.acme.com
 https://www.acme.com/search?user=developer
 ```
+
+#### Running in Tomcat
+
+```
+Copy standalone-preferences-X.X.X.jar to ${catalina.home}/lib/
+You can set your CATALINA_OPTS="-Dorg.infra.preferences.sourcedir=${catalina.base}/sysprefs"
+```
+
+###### Note: Don't copy standalone-preferences-X.X.X.jar to your WEB-INF/lib/ (classloader problems) 
+
 
 ---
 
@@ -101,6 +112,7 @@ Add the dependency to your pom.xml:
         <groupId>org.infra</groupId>
         <artifactId>standalone-preferences</artifactId>
         <version>1.0.1</version>
+        <scope>provided</scope>
     </dependency>
 
 ---
