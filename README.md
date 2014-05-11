@@ -53,7 +53,9 @@ public class Example {
 * More info: [Preferences API](http://docs.oracle.com/javase/7/docs/api/java/util/prefs/Preferences.html)
 
 
-#### Example Config ```${user.home}/sysprefs/org.infra.preferences.example.properties```
+#### Example Config 
+
+###### ```${user.home}/sysprefs/org.infra.preferences.example.properties```
 
 ```properties
 mykey=my-config-value
