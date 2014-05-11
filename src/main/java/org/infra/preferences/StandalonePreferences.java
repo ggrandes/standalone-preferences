@@ -3,10 +3,11 @@ package org.infra.preferences;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,57 +17,78 @@ import java.util.prefs.BackingStoreException;
 import org.infra.preferences.MapExpression.InvalidExpression;
 
 /**
+ * StandalonePreferencesFactory (one file per package)
+ * 
+ * <p>
  * Usage:
  * 
  * <pre>
  * -Djava.util.prefs.PreferencesFactory=org.infra.preferences.StandalonePreferencesFactory
- * -Dorg.infra.preferences.source=filename
- * Default file: ${user.home}/sysprefs.properties
+ * -Dorg.infra.preferences.sourcedir=directoryName
+ * Default dir: ${user.home}/sysprefs/
  * </pre>
  */
 public class StandalonePreferences extends AbstractPreferences {
 	private static final Logger log = Logger.getLogger(StandalonePreferences.class.getName());
 	private static final String packageName = StandalonePreferences.class.getPackage().getName();
-	private static final String PROP_SOURCE_NAME = packageName + ".source";
+	private static final String PROP_SOURCE_DIR = packageName + ".sourcedir";
 	private static final String PROP_EVAL_DISABLED_NAME = packageName + ".evalget.disabled";
-	private static final File PROP_SOURCE_DEF_VALUE;
-	private static final File SOURCE_FILE;
+	private static final File PROP_SOURCE_DIR_DEF_VALUE;
+	private static final File SOURCE_DIR;
 	private static final boolean PROP_EVAL_DISABLED;
+	private static final String ROOT_NAME = "ROOT";
+	private static final String FILE_EXTENSION = ".properties";
+	private final String fileName;
+	private final File file;
 	private final StringProperties data;
+	private boolean isDirty = false;
 
 	static {
-		PROP_SOURCE_DEF_VALUE = new File(System.getProperty("user.home"), "sysprefs.properties");
+		PROP_SOURCE_DIR_DEF_VALUE = new File(System.getProperty("user.home"), "sysprefs");
 		PROP_EVAL_DISABLED = Boolean.getBoolean(PROP_EVAL_DISABLED_NAME);
-		String source = System.getProperty(PROP_SOURCE_NAME);
-		if (source != null) {
+		String sourceDir = System.getProperty(PROP_SOURCE_DIR);
+		if (sourceDir != null) {
 			try {
-				source = new MapExpression(source).eval().get();
+				sourceDir = new MapExpression(sourceDir).eval().get();
 			} catch (InvalidExpression e) {
-				log.log(Level.WARNING, "Error in eval of " + source + ": " + e.toString());
-				source = null;
+				log.log(Level.WARNING, "Error in eval of " + sourceDir + ": " + e.toString());
+				sourceDir = null;
 			}
 		}
-		SOURCE_FILE = (source != null ? new File(source) : PROP_SOURCE_DEF_VALUE);
+		SOURCE_DIR = (sourceDir != null ? new File(sourceDir) : PROP_SOURCE_DIR_DEF_VALUE);
 	}
 
 	protected StandalonePreferences(final StandalonePreferences parent, final String name) {
 		super(parent, name);
-		if (parent == null) {
-			data = new StringProperties().getRootView();
-			load();
-		} else {
-			data = parent.getSubView(name);
-		}
+		fileName = getFileName();
+		file = new File(SOURCE_DIR, fileName + FILE_EXTENSION);
+		data = new StringProperties().getRootView();
+		load();
+	}
+
+	private final String getFileName() {
+		String name = absolutePath();
+		if (name.charAt(0) == '/')
+			name = name.substring(1);
+		name = name.replace('/', '.');
+		if (name.isEmpty())
+			name = ROOT_NAME;
+		return name;
 	}
 
 	private final void load() {
+		if (!file.exists()) {
+			log.log(Level.WARNING, "File for StandalonePreferences not exists " + file);
+			return;
+		}
+		log.log(Level.INFO, "Loading StandalonePreferences from file " + file);
 		InputStream is = null;
 		try {
-			is = new FileInputStream(SOURCE_FILE);
+			is = new FileInputStream(file);
 			data.getRootView().load(is);
 		} catch (IOException e) {
 			log.log(Level.WARNING, "Error loading StandalonePreferences from file " + //
-					SOURCE_FILE + ": " + e.toString());
+					file + ": " + e.toString());
 		} finally {
 			try {
 				if (is != null)
@@ -77,10 +99,12 @@ public class StandalonePreferences extends AbstractPreferences {
 	}
 
 	private final void save() throws IOException {
+		log.log(Level.INFO, "Saving StandalonePreferences to file " + file);
 		OutputStream os = null;
 		try {
-			os = new FileOutputStream(SOURCE_FILE);
-			data.getRootView().store(os, this.getClass().getName());
+			os = new FileOutputStream(file);
+			data.getRootView().store(os, fileName);
+			isDirty = false;
 		} finally {
 			try {
 				if (os != null)
@@ -88,10 +112,6 @@ public class StandalonePreferences extends AbstractPreferences {
 			} catch (Exception e) {
 			}
 		}
-	}
-
-	private StringProperties getSubView(final String name) {
-		return data.getSubView(name);
 	}
 
 	@Override
@@ -108,11 +128,13 @@ public class StandalonePreferences extends AbstractPreferences {
 
 	@Override
 	protected void putSpi(final String key, final String value) {
+		isDirty = true;
 		data.setProperty(key, value);
 	}
 
 	@Override
 	protected void removeSpi(final String key) {
+		isDirty = true;
 		data.removeProperty(key);
 	}
 
@@ -123,24 +145,39 @@ public class StandalonePreferences extends AbstractPreferences {
 
 	@Override
 	protected String[] keysSpi() throws BackingStoreException {
-		final Set<String> names = data.stringFirstLevelPropertyNames();
-		final ArrayList<String> validNames = new ArrayList<String>();
-		for (final String name : names) {
-			if (data.getProperty(name) != null)
-				validNames.add(name);
-		}
-		return validNames.toArray(new String[validNames.size()]);
+		final Set<String> names = data.stringPropertyNames();
+		return names.toArray(new String[names.size()]);
 	}
 
 	@Override
 	protected String[] childrenNamesSpi() throws BackingStoreException {
-		final Set<String> names = data.stringFirstLevelPropertyNames();
-		final ArrayList<String> validNames = new ArrayList<String>();
-		for (final String name : names) {
-			if (data.getProperty(name) == null)
-				validNames.add(name);
+		final String baseName = (ROOT_NAME.equals(fileName) ? "" : fileName + ".");
+		final FilenameFilter filter = new FilenameFilter() {
+			@Override
+			public boolean accept(final File dir, final String name) {
+				final File file = new File(dir, name);
+				if (!file.isFile())
+					return false;
+				if (!name.endsWith(FILE_EXTENSION))
+					return false;
+				if (!name.startsWith(baseName))
+					return false;
+				return true;
+			}
+		};
+		final LinkedHashSet<String> subs = new LinkedHashSet<String>();
+		for (String candidate : SOURCE_DIR.list(filter)) {
+			if ((baseName.length() + FILE_EXTENSION.length()) > candidate.length())
+				continue;
+			candidate = candidate.substring(baseName.length(), candidate.length() - FILE_EXTENSION.length());
+			final int offset = candidate.indexOf('.');
+			if (offset >= 0) {
+				candidate = candidate.substring(0, offset);
+			}
+			if (!candidate.isEmpty())
+				subs.add(candidate);
 		}
-		return validNames.toArray(new String[validNames.size()]);
+		return subs.toArray(new String[subs.size()]);
 	}
 
 	@Override
@@ -150,21 +187,14 @@ public class StandalonePreferences extends AbstractPreferences {
 
 	@Override
 	protected void syncSpi() throws BackingStoreException {
+		flushSpi();
 	}
 
 	@Override
 	protected void flushSpi() throws BackingStoreException {
-	}
-
-	@Override
-	public void sync() throws BackingStoreException {
-		flush();
-	}
-
-	@Override
-	public void flush() throws BackingStoreException {
 		try {
-			save();
+			if (isDirty)
+				save();
 		} catch (IOException e) {
 			throw new BackingStoreException(e);
 		}

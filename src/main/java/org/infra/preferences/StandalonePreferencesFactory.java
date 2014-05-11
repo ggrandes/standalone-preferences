@@ -4,7 +4,9 @@ import java.util.prefs.Preferences;
 import java.util.prefs.PreferencesFactory;
 
 /**
- * Usage:
+ * StandalonePreferencesFactory (one file per package)
+ * 
+ * <p>Usage:
  * 
  * <pre>
  * -Djava.util.prefs.PreferencesFactory=org.infra.preferences.StandalonePreferencesFactory

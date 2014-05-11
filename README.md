@@ -2,7 +2,7 @@
 
 Java Preferences API Implementation on Filesystem. Open Source Java project under Apache License v2.0
 
-### Current Version is [1.0.0](https://maven-release.s3.amazonaws.com/release/org/infra/standalone-preferences/1.0.0/standalone-preferences-1.0.0.jar)
+### Current Version is [1.0.1](https://maven-release.s3.amazonaws.com/release/org/infra/standalone-preferences/1.0.1/standalone-preferences-1.0.1.jar)
 
 ---
 
@@ -11,6 +11,7 @@ Java Preferences API Implementation on Filesystem. Open Source Java project unde
  - No external dependencies
  - Allow eval of get with System Properties and Back reference with ```${tagname}```
  - Allow disable eval on get (see configuration)
+ - Config file per package
  - User Preferences are NOT supported (intentionally)
 
 ## DOC
@@ -21,9 +22,9 @@ Java Preferences API Implementation on Filesystem. Open Source Java project unde
 
  - Standard Java Preferences API for select the factory: ```java.util.prefs.PreferencesFactory```
    - Example: -Djava.util.prefs.PreferencesFactory=org.infra.preferences.StandalonePreferencesFactory
- - Select source of System Preferences: ```org.infra.preferences.source=filename``` (allow evaluation)
-   - Example: -Dorg.infra.preferences.source=${user.home}/mypreferences.properties
-   - Default value: ${user.home}/sysprefs.properties   
+ - Select source of System Preferences: ```org.infra.preferences.sourcedir=directoryName``` (allow evaluation)
+   - Example: -Dorg.infra.preferences.sourcedir=${user.home}/myprefs/
+   - Default value: ${user.home}/sysprefs/
  - For disable Eval of get: ```org.infra.preferences.evalget.disabled=true```
 
 
@@ -52,13 +53,13 @@ public class Example {
 * More info: [Preferences API](http://docs.oracle.com/javase/7/docs/api/java/util/prefs/Preferences.html)
 
 
-#### Example Config ```${user.home}/sysprefs.properties```
+#### Example Config ```${user.home}/sysprefs/org.infra.preferences.example.properties```
 
 ```properties
-org.infra.preferences.example.mykey=my-config-value
-org.infra.preferences.example.other.key=my-config-value-for-other
-org.infra.preferences.example.urlbase=https://www.acme.com
-org.infra.preferences.example.urlsearch=${urlbase}/search?user=${user.name}
+mykey=my-config-value
+other.key=my-config-value-for-other
+urlbase=https://www.acme.com
+urlsearch=${urlbase}/search?user=${user.name}
 ```
 
 
@@ -97,7 +98,7 @@ Add the dependency to your pom.xml:
     <dependency>
         <groupId>org.infra</groupId>
         <artifactId>standalone-preferences</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </dependency>
 
 ---

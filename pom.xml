@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.infra</groupId>
 	<artifactId>standalone-preferences</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<description>Java Preferences API Implementation on Filesystem</description>
 
 	<dependencies>
