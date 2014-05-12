@@ -112,7 +112,7 @@ Add the dependency to your pom.xml:
         <groupId>org.infra</groupId>
         <artifactId>standalone-preferences</artifactId>
         <version>1.0.1</version>
-        <scope>provided</scope>
+        <scope>runtime</scope>
     </dependency>
 
 ---
