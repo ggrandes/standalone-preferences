@@ -90,7 +90,25 @@ Copy standalone-preferences-X.X.X.jar to ${catalina.home}/lib/
 You can set your CATALINA_OPTS="-Dorg.infra.preferences.sourcedir=${catalina.base}/sysprefs"
 ```
 
-###### Note: Don't copy standalone-preferences-X.X.X.jar to your WEB-INF/lib/ (classloader problems) 
+###### Note: Don't copy standalone-preferences-X.X.X.jar to your WEB-INF/lib/ (classloader problems)
+
+#### Running Inside Spring
+
+```xml
+<!-- Config -->
+<bean id="preferencePlaceHolder" 
+        class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+    <property name="systemTreePath" value="com.acme.foobar.package.name" />
+</bean>
+<!-- Example -->
+<bean id="dataSource" 
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="${jdbc.driverClassName}" />
+    <property name="url" value="${jdbc.url}" />
+    <property name="username" value="${jdbc.username}" />
+    <property name="password" value="${jdbc.password}" />
+</bean>
+```
 
 
 ---
