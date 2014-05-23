@@ -190,7 +190,7 @@ Add the dependency to your pom.xml:
         <groupId>org.infra</groupId>
         <artifactId>standalone-preferences</artifactId>
         <version>1.0.1</version>
-        <scope>system</scope>
+        <scope>provided</scope>
     </dependency>
 
 ---
