@@ -14,15 +14,15 @@ import java.util.logging.Logger;
 import java.util.prefs.AbstractPreferences;
 import java.util.prefs.BackingStoreException;
 
-import org.infra.preferences.MapExpression.InvalidExpression;
+import org.infra.mapexpression.InvalidExpression;
+import org.infra.mapexpression.MapExpression;
+import org.infra.stringproperties.StringProperties;
 
 /**
  * StandalonePreferencesFactory (one file per package)
- * 
- * <p>
+ * <pre>
  * Usage:
  * 
- * <pre>
  * -Djava.util.prefs.PreferencesFactory=org.infra.preferences.StandalonePreferencesFactory
  * -Dorg.infra.preferences.sourcedir=directoryName
  * Default dir: ${user.home}/sysprefs/

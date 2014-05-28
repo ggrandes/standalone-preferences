@@ -2,13 +2,13 @@
 
 Java Preferences API Implementation on Filesystem. Open Source Java project under Apache License v2.0
 
-### Current Version is [1.0.1](https://maven-release.s3.amazonaws.com/release/org/infra/standalone-preferences/1.0.1/standalone-preferences-1.0.1.jar)
+### Current Version is [1.0.2](https://maven-release.s3.amazonaws.com/release/org/infra/standalone-preferences/1.0.2/standalone-preferences-1.0.2.jar)
 
 ---
 
 ## Features
 
- - No external dependencies.
+ - Small Footprint
  - Allow eval of get with System Properties and Back reference with ```${tagname}```
  - Allow disable eval on get (see configuration).
  - Config file per package.
@@ -189,7 +189,7 @@ Add the dependency to your pom.xml:
     <dependency>
         <groupId>org.infra</groupId>
         <artifactId>standalone-preferences</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
         <scope>provided</scope>
     </dependency>
 

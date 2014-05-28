@@ -1,13 +1,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<groupId>org.infra</groupId>
 	<artifactId>standalone-preferences</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<description>Java Preferences API Implementation on Filesystem</description>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.infra</groupId>
+			<artifactId>mapexpression</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.infra</groupId>
+			<artifactId>stringproperties</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -30,6 +42,36 @@
 						<exclude>**/sandbox/*</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+
+			<!-- Make UberJar -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<minimizeJar>true</minimizeJar>
+							<createDependencyReducedPom>true</createDependencyReducedPom>
+							<dependencyReducedPomLocation>${java.io.tmpdir}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
+							<relocations>
+								<relocation>
+									<pattern>org.infra.mapexpression</pattern>
+									<shadedPattern>hidden.mapexpression</shadedPattern>
+								</relocation>
+								<relocation>
+									<pattern>org.infra.stringproperties</pattern>
+									<shadedPattern>hidden.stringproperties</shadedPattern>
+								</relocation>
+							</relocations>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 

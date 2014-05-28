@@ -6,8 +6,8 @@ import java.util.prefs.BackingStoreException;
 /**
  * For use in User Preferences
  */
-class EmptyPreferences extends AbstractPreferences {
-	protected EmptyPreferences() {
+public class EmptyPreferences extends AbstractPreferences {
+	public EmptyPreferences() {
 		super(null, "");
 	}
 
