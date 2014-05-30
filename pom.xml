@@ -62,11 +62,11 @@
 							<relocations>
 								<relocation>
 									<pattern>org.infra.mapexpression</pattern>
-									<shadedPattern>hidden.mapexpression</shadedPattern>
+									<shadedPattern>hidden.org.infra.preferences.mapexpression</shadedPattern>
 								</relocation>
 								<relocation>
 									<pattern>org.infra.stringproperties</pattern>
-									<shadedPattern>hidden.stringproperties</shadedPattern>
+									<shadedPattern>hidden.org.infra.preferences.stringproperties</shadedPattern>
 								</relocation>
 							</relocations>
 						</configuration>
