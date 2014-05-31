@@ -20,13 +20,15 @@ Java Preferences API Implementation on Filesystem. Open Source Java project unde
 
 #### Configuration: System Properties
 
-
  - Standard Java Preferences API for select the factory: ```java.util.prefs.PreferencesFactory```
    - Example: -Djava.util.prefs.PreferencesFactory=org.infra.preferences.StandalonePreferencesFactory
  - Select source of System Preferences: ```org.infra.preferences.sourcedir=directoryName``` (allow evaluation)
    - Example: -Dorg.infra.preferences.sourcedir=${user.home}/myprefs/
    - Default value: ${user.home}/sysprefs/
  - For disable Eval of get (Global): ```org.infra.preferences.evalget.disabled=true```
+
+#### Configuration: Local Properties
+
  - For disable Eval of get (Preferences Node): ```preferences.evalget.disabled=true```
 
 
