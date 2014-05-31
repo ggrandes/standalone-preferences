@@ -124,6 +124,8 @@ mykey=my-config-value
 other.key=my-config-value-for-other
 urlbase=https://www.acme.com
 urlsearch=${urlbase}/search?user=${user.name}
+# For disable Eval uncomment this line
+#preferences.evalget.disabled=true
 ```
 
 
