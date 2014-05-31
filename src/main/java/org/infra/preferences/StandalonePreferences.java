@@ -67,7 +67,7 @@ public class StandalonePreferences extends AbstractPreferences {
 		file = new File(SOURCE_DIR, fileName + FILE_EXTENSION);
 		data = new StringProperties().getRootView();
 		load();
-		nodeEvalDisabled = Boolean.parseBoolean(PROP_LOCAL_EVAL_DISABLED_NAME);
+		nodeEvalDisabled = Boolean.parseBoolean(data.getProperty(PROP_LOCAL_EVAL_DISABLED_NAME, "false"));
 	}
 
 	private final String getFileName() {
