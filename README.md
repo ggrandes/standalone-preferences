@@ -2,7 +2,7 @@
 
 Java Preferences API Implementation on Filesystem. Open Source Java project under Apache License v2.0
 
-### Current Version is [1.0.2](https://maven-release.s3.amazonaws.com/release/org/infra/standalone-preferences/1.0.2/standalone-preferences-1.0.2.jar)
+### Current Version is [1.0.3](https://maven-release.s3.amazonaws.com/release/org/infra/standalone-preferences/1.0.3/standalone-preferences-1.0.3.jar)
 
 ---
 
@@ -26,7 +26,8 @@ Java Preferences API Implementation on Filesystem. Open Source Java project unde
  - Select source of System Preferences: ```org.infra.preferences.sourcedir=directoryName``` (allow evaluation)
    - Example: -Dorg.infra.preferences.sourcedir=${user.home}/myprefs/
    - Default value: ${user.home}/sysprefs/
- - For disable Eval of get: ```org.infra.preferences.evalget.disabled=true```
+ - For disable Eval of get (Global): ```org.infra.preferences.evalget.disabled=true```
+ - For disable Eval of get (Preferences Node): ```preferences.evalget.disabled=true```
 
 
 #### Usage Example (basic)
@@ -189,7 +190,7 @@ Add the dependency to your pom.xml:
     <dependency>
         <groupId>org.infra</groupId>
         <artifactId>standalone-preferences</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
         <scope>provided</scope>
     </dependency>
 

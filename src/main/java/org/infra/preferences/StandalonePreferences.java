@@ -20,6 +20,7 @@ import org.infra.stringproperties.StringProperties;
 
 /**
  * StandalonePreferencesFactory (one file per package)
+ * 
  * <pre>
  * Usage:
  * 
@@ -32,20 +33,22 @@ public class StandalonePreferences extends AbstractPreferences {
 	private static final Logger log = Logger.getLogger(StandalonePreferences.class.getName());
 	private static final String packageName = StandalonePreferences.class.getPackage().getName();
 	private static final String PROP_SOURCE_DIR = packageName + ".sourcedir";
-	private static final String PROP_EVAL_DISABLED_NAME = packageName + ".evalget.disabled";
+	private static final String PROP_GLOBAL_EVAL_DISABLED_NAME = packageName + ".evalget.disabled";
+	private static final String PROP_LOCAL_EVAL_DISABLED_NAME = "preferences.evalget.disabled";
 	private static final File PROP_SOURCE_DIR_DEF_VALUE;
 	private static final File SOURCE_DIR;
-	private static final boolean PROP_EVAL_DISABLED;
+	private static final boolean globalEvalDisabled;
 	private static final String ROOT_NAME = "ROOT";
 	private static final String FILE_EXTENSION = ".properties";
 	private final String fileName;
 	private final File file;
 	private final StringProperties data;
+	private boolean nodeEvalDisabled = false;
 	private boolean isDirty = false;
 
 	static {
 		PROP_SOURCE_DIR_DEF_VALUE = new File(System.getProperty("user.home"), "sysprefs");
-		PROP_EVAL_DISABLED = Boolean.getBoolean(PROP_EVAL_DISABLED_NAME);
+		globalEvalDisabled = Boolean.getBoolean(PROP_GLOBAL_EVAL_DISABLED_NAME);
 		String sourceDir = System.getProperty(PROP_SOURCE_DIR);
 		if (sourceDir != null) {
 			try {
@@ -64,6 +67,7 @@ public class StandalonePreferences extends AbstractPreferences {
 		file = new File(SOURCE_DIR, fileName + FILE_EXTENSION);
 		data = new StringProperties().getRootView();
 		load();
+		nodeEvalDisabled = Boolean.parseBoolean(PROP_LOCAL_EVAL_DISABLED_NAME);
 	}
 
 	private final String getFileName() {
@@ -116,7 +120,7 @@ public class StandalonePreferences extends AbstractPreferences {
 
 	@Override
 	protected String getSpi(final String key) {
-		if (PROP_EVAL_DISABLED)
+		if (globalEvalDisabled || nodeEvalDisabled)
 			return data.getProperty(key);
 		try {
 			return data.getPropertyEval(key);
@@ -128,6 +132,9 @@ public class StandalonePreferences extends AbstractPreferences {
 
 	@Override
 	protected void putSpi(final String key, final String value) {
+		if (PROP_LOCAL_EVAL_DISABLED_NAME.equals(key)) {
+			nodeEvalDisabled = Boolean.parseBoolean(value);
+		}
 		isDirty = true;
 		data.setProperty(key, value);
 	}

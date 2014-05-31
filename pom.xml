@@ -4,7 +4,7 @@
 
 	<groupId>org.infra</groupId>
 	<artifactId>standalone-preferences</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<description>Java Preferences API Implementation on Filesystem</description>
 
 	<dependencies>
