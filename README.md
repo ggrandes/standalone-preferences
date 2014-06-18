@@ -2,7 +2,7 @@
 
 Java Preferences API Implementation on Filesystem. Open Source Java project under Apache License v2.0
 
-### Current Version is [1.0.3](https://maven-release.s3.amazonaws.com/release/org/infra/standalone-preferences/1.0.3/standalone-preferences-1.0.3.jar)
+### Current Version is [1.0.4](https://maven-release.s3.amazonaws.com/release/org/javastack/standalone-preferences/1.0.4/standalone-preferences-1.0.4.jar)
 
 ---
 
@@ -21,11 +21,11 @@ Java Preferences API Implementation on Filesystem. Open Source Java project unde
 #### Configuration: System Properties
 
  - Standard Java Preferences API for select the factory: ```java.util.prefs.PreferencesFactory```
-   - Example: -Djava.util.prefs.PreferencesFactory=org.infra.preferences.StandalonePreferencesFactory
- - Select source of System Preferences: ```org.infra.preferences.sourcedir=directoryName``` (allow evaluation)
-   - Example: -Dorg.infra.preferences.sourcedir=${user.home}/myprefs/
+   - Example: -Djava.util.prefs.PreferencesFactory=org.javastack.preferences.StandalonePreferencesFactory
+ - Select source of System Preferences: ```org.javastack.preferences.sourcedir=directoryName``` (allow evaluation)
+   - Example: -Dorg.javastack.preferences.sourcedir=${user.home}/myprefs/
    - Default value: ${user.home}/sysprefs/
- - For disable Eval of get (Global): ```org.infra.preferences.evalget.disabled=true```
+ - For disable Eval of get (Global): ```org.javastack.preferences.evalget.disabled=true```
 
 #### Configuration: Local Properties
 
@@ -35,7 +35,7 @@ Java Preferences API Implementation on Filesystem. Open Source Java project unde
 #### Usage Example (basic)
 
 ```java
-package org.infra.preferences.example;
+package org.javastack.preferences.example;
 
 import java.util.prefs.Preferences;
 
@@ -57,7 +57,7 @@ public class Example {
 #### Usage Example (enum based)
 
 ```java
-package org.infra.preferences.example;
+package org.javastack.preferences.example;
 
 import java.util.prefs.Preferences;
 
@@ -112,14 +112,14 @@ public enum ExampleEnum {
 }
 ```
 
-* More examples in [Example package](https://github.com/ggrandes/standalone-preferences/tree/master/src/main/java/org/infra/preferences/example)
+* More examples in [Example package](https://github.com/ggrandes/standalone-preferences/tree/master/src/main/java/org/javastack/preferences/example)
 * More info: [Preferences API](http://docs.oracle.com/javase/7/docs/api/java/util/prefs/Preferences.html)
 
 
 
 #### Example Config 
 
-###### ```${user.home}/sysprefs/org.infra.preferences.example.properties```
+###### ```${user.home}/sysprefs/org.javastack.preferences.example.properties```
 
 ```properties
 mykey=my-config-value
@@ -134,7 +134,7 @@ urlsearch=${urlbase}/search?user=${user.name}
 #### Running standalone
 
 ```
-java -cp standalone-preferences-X.X.X.jar org.infra.preferences.example.Example
+java -cp standalone-preferences-X.X.X.jar org.javastack.preferences.example.Example
 ```
 
 
@@ -152,7 +152,7 @@ https://www.acme.com/search?user=developer
 
 ```
 Copy standalone-preferences-X.X.X.jar to ${catalina.home}/lib/
-You can set your CATALINA_OPTS="-Dorg.infra.preferences.sourcedir=${catalina.base}/sysprefs"
+You can set your CATALINA_OPTS="-Dorg.javastack.preferences.sourcedir=${catalina.base}/sysprefs"
 ```
 
 ###### Note: Don't copy standalone-preferences-X.X.X.jar to your WEB-INF/lib/ (classloader problems)
@@ -192,9 +192,9 @@ Add the maven repository location to your pom.xml:
 Add the dependency to your pom.xml:
 
     <dependency>
-        <groupId>org.infra</groupId>
+        <groupId>org.javastack</groupId>
         <artifactId>standalone-preferences</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
         <scope>provided</scope>
     </dependency>
 

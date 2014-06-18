@@ -1,4 +1,4 @@
-package org.infra.preferences;
+package org.javastack.preferences;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,9 +14,9 @@ import java.util.logging.Logger;
 import java.util.prefs.AbstractPreferences;
 import java.util.prefs.BackingStoreException;
 
-import org.infra.mapexpression.InvalidExpression;
-import org.infra.mapexpression.MapExpression;
-import org.infra.stringproperties.StringProperties;
+import org.javastack.mapexpression.InvalidExpression;
+import org.javastack.mapexpression.MapExpression;
+import org.javastack.stringproperties.StringProperties;
 
 /**
  * StandalonePreferencesFactory (one file per package)
@@ -24,8 +24,8 @@ import org.infra.stringproperties.StringProperties;
  * <pre>
  * Usage:
  * 
- * -Djava.util.prefs.PreferencesFactory=org.infra.preferences.StandalonePreferencesFactory
- * -Dorg.infra.preferences.sourcedir=directoryName
+ * -Djava.util.prefs.PreferencesFactory=org.javastack.preferences.StandalonePreferencesFactory
+ * -Dorg.javastack.preferences.sourcedir=directoryName
  * Default dir: ${user.home}/sysprefs/
  * </pre>
  */

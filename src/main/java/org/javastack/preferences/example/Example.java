@@ -1,4 +1,4 @@
-package org.infra.preferences.example;
+package org.javastack.preferences.example;
 
 import java.util.prefs.Preferences;
 

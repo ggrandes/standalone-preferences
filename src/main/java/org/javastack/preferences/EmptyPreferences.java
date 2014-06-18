@@ -1,4 +1,4 @@
-package org.infra.preferences;
+package org.javastack.preferences;
 
 import java.util.prefs.AbstractPreferences;
 import java.util.prefs.BackingStoreException;

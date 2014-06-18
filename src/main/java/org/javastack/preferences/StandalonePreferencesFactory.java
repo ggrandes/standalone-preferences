@@ -1,4 +1,4 @@
-package org.infra.preferences;
+package org.javastack.preferences;
 
 import java.util.prefs.Preferences;
 import java.util.prefs.PreferencesFactory;
@@ -8,7 +8,7 @@ import java.util.prefs.PreferencesFactory;
  * <pre>
  * Usage:
  * 
- * -Djava.util.prefs.PreferencesFactory=org.infra.preferences.StandalonePreferencesFactory
+ * -Djava.util.prefs.PreferencesFactory=org.javastack.preferences.StandalonePreferencesFactory
  * </pre>
  * 
  * @see StandalonePreferences

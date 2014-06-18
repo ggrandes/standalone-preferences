@@ -2,21 +2,21 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.infra</groupId>
+	<groupId>org.javastack</groupId>
 	<artifactId>standalone-preferences</artifactId>
-	<version>1.0.3</version>
+	<version>1.0.4</version>
 	<description>Java Preferences API Implementation on Filesystem</description>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.infra</groupId>
+			<groupId>org.javastack</groupId>
 			<artifactId>mapexpression</artifactId>
-			<version>1.0.1</version>
+			<version>1.0.2</version>
 		</dependency>
 		<dependency>
-			<groupId>org.infra</groupId>
+			<groupId>org.javastack</groupId>
 			<artifactId>stringproperties</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</dependency>
 	</dependencies>
 
@@ -68,17 +68,17 @@
 							<dependencyReducedPomLocation>${java.io.tmpdir}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
 							<relocations>
 								<relocation>
-									<pattern>org.infra.mapexpression</pattern>
-									<shadedPattern>hidden.org.infra.preferences.mapexpression</shadedPattern>
+									<pattern>org.javastack.mapexpression</pattern>
+									<shadedPattern>hidden.org.javastack.preferences.mapexpression</shadedPattern>
 								</relocation>
 								<relocation>
-									<pattern>org.infra.stringproperties</pattern>
-									<shadedPattern>hidden.org.infra.preferences.stringproperties</shadedPattern>
+									<pattern>org.javastack.stringproperties</pattern>
+									<shadedPattern>hidden.org.javastack.preferences.stringproperties</shadedPattern>
 								</relocation>
 							</relocations>
 							<filters>
 								<filter>
-									<artifact>org.infra:*</artifact>
+									<artifact>org.javastack:*</artifact>
 									<excludes>
 										<exclude>**/pom.properties</exclude>
 										<exclude>**/*.poperties</exclude>
