@@ -2,7 +2,7 @@
 
 Java Preferences API Implementation on Filesystem. Open Source Java project under Apache License v2.0
 
-### Current Version is [1.0.4](https://maven-release.s3.amazonaws.com/release/org/javastack/standalone-preferences/1.0.4/standalone-preferences-1.0.4.jar)
+### Current Stable Version is [1.0.4](https://maven-release.s3.amazonaws.com/release/org/javastack/standalone-preferences/1.0.4/standalone-preferences-1.0.4.jar)
 
 ---
 
