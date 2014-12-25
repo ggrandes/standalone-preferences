@@ -2,7 +2,7 @@
 
 Java Preferences API Implementation on Filesystem. Open Source Java project under Apache License v2.0
 
-### Current Stable Version is [1.0.4](https://maven-release.s3.amazonaws.com/release/org/javastack/standalone-preferences/1.0.4/standalone-preferences-1.0.4.jar)
+### Current Stable Version is [1.0.4](http://search.maven.org/remotecontent?filepath=org/javastack/standalone-preferences/1.0.4/standalone-preferences-1.0.4.jar)
 
 ---
 
@@ -179,15 +179,6 @@ You can set your CATALINA_OPTS="-Dorg.javastack.preferences.sourcedir=${catalina
 ---
 
 ## MAVEN
-
-Add the maven repository location to your pom.xml: 
-
-    <repositories>
-        <repository>
-            <id>ggrandes-maven-s3-repo</id>
-            <url>https://maven-release.s3.amazonaws.com/release/</url>
-        </repository>
-    </repositories>
 
 Add the dependency to your pom.xml:
 

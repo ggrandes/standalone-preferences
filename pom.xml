@@ -7,6 +7,27 @@
 	<version>1.0.4</version>
 	<description>Java Preferences API Implementation on Filesystem</description>
 
+	<name>${project.groupId}:${project.artifactId}</name>
+	<url>https://github.com/ggrandes/mapexpression</url>
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>ggrandes</id>
+			<name>Guillermo Grandes</name>
+			<email>guillermo.grandes@gmail.com</email>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:git:git@github.com:ggrandes/mapexpression.git</connection>
+		<developerConnection>scm:git:git@github.com:ggrandes/mapexpression.git</developerConnection>
+		<url>git@github.com:ggrandes/mapexpression.git</url>
+	</scm>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.javastack</groupId>
@@ -91,29 +112,88 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- Package source to JAR to upload to repo -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<excludeResources>true</excludeResources>
+							<excludes>
+								<exclude>**/sandbox/*</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Package JavaDocs to JAR to upload to repo -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<tags>
+						<tag>
+							<name>threadSafe</name>
+							<placement>a</placement>
+							<head>ThreadSafe:</head>
+						</tag>
+					</tags>
+					<excludePackageNames>*.sandbox.*</excludePackageNames>
+				</configuration>
+			</plugin>
+			<!-- GPG Signed Components for Maven Central -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Maven Central Deployment -->
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.3</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
 		</plugins>
-
-		<!-- Deployment Maven-S3 -->
-		<extensions>
-			<extension>
-				<groupId>org.springframework.build</groupId>
-				<artifactId>aws-maven</artifactId>
-				<version>4.4.0.RELEASE</version>
-			</extension>
-		</extensions>
 	</build>
 
-	<!-- Deployment -->
+	<!-- Maven Central Deployment -->
 	<distributionManagement>
-		<repository>
-			<id>maven-s3-release-repo</id>
-			<name>S3 Release Repository</name>
-			<url>s3://maven-release/release</url>
-		</repository>
 		<snapshotRepository>
-			<id>maven-s3-snapshot-repo</id>
-			<name>S3 Snapshot Repository</name>
-			<url>s3://maven-snapshot/snapshot</url>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+		</repository>
 	</distributionManagement>
 </project>
