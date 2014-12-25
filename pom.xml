@@ -8,7 +8,7 @@
 	<description>Java Preferences API Implementation on Filesystem</description>
 
 	<name>${project.groupId}:${project.artifactId}</name>
-	<url>https://github.com/ggrandes/mapexpression</url>
+	<url>https://github.com/ggrandes/standalone-preferences</url>
 	<licenses>
 		<license>
 			<name>The Apache License, Version 2.0</name>
@@ -23,9 +23,9 @@
 		</developer>
 	</developers>
 	<scm>
-		<connection>scm:git:git@github.com:ggrandes/mapexpression.git</connection>
-		<developerConnection>scm:git:git@github.com:ggrandes/mapexpression.git</developerConnection>
-		<url>git@github.com:ggrandes/mapexpression.git</url>
+		<connection>scm:git:git@github.com:ggrandes/standalone-preferences.git</connection>
+		<developerConnection>scm:git:git@github.com:ggrandes/standalone-preferences.git</developerConnection>
+		<url>git@github.com:ggrandes/standalone-preferences.git</url>
 	</scm>
 
 	<dependencies>
