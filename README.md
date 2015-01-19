@@ -152,7 +152,7 @@ https://www.acme.com/search?user=developer
 
 ```
 Copy standalone-preferences-X.X.X.jar to ${catalina.home}/lib/
-You can set your CATALINA_OPTS="-Dorg.javastack.preferences.sourcedir=${catalina.base}/sysprefs"
+You can set your CATALINA_OPTS="-Dorg.javastack.preferences.sourcedir=\${CATALINA_BASE}/appconf/ -Djava.util.prefs.PreferencesFactory=org.javastack.preferences.StandalonePreferencesFactory"
 ```
 
 ###### Note: Don't copy standalone-preferences-X.X.X.jar to your WEB-INF/lib/ (classloader problems)
