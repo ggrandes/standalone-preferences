@@ -4,7 +4,7 @@
 
 	<groupId>org.javastack</groupId>
 	<artifactId>standalone-preferences</artifactId>
-	<version>1.0.4</version>
+	<version>1.2.1</version>
 	<description>Java Preferences API Implementation on Filesystem</description>
 
 	<name>${project.groupId}:${project.artifactId}</name>
@@ -37,6 +37,11 @@
 		<dependency>
 			<groupId>org.javastack</groupId>
 			<artifactId>stringproperties</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.javastack</groupId>
+			<artifactId>classloadermap</artifactId>
 			<version>1.0.1</version>
 		</dependency>
 	</dependencies>
@@ -95,6 +100,10 @@
 								<relocation>
 									<pattern>org.javastack.stringproperties</pattern>
 									<shadedPattern>hidden.org.javastack.preferences.stringproperties</shadedPattern>
+								</relocation>
+								<relocation>
+									<pattern>org.javastack.classloadermap</pattern>
+									<shadedPattern>hidden.org.javastack.preferences.classloadermap</shadedPattern>
 								</relocation>
 							</relocations>
 							<filters>

@@ -36,10 +36,11 @@ public class StandalonePreferences extends AbstractPreferences {
 	private static final String PROP_GLOBAL_EVAL_DISABLED_NAME = packageName + ".evalget.disabled";
 	private static final String PROP_LOCAL_EVAL_DISABLED_NAME = "preferences.evalget.disabled";
 	private static final File PROP_SOURCE_DIR_DEF_VALUE;
-	private static final File SOURCE_DIR;
+	private static MapExpression SOURCE_EXPR = null;
 	private static final boolean globalEvalDisabled;
 	private static final String ROOT_NAME = "ROOT";
 	private static final String FILE_EXTENSION = ".properties";
+	private final File SOURCE_DIR;
 	private final String fileName;
 	private final File file;
 	private final StringProperties data;
@@ -49,25 +50,38 @@ public class StandalonePreferences extends AbstractPreferences {
 	static {
 		PROP_SOURCE_DIR_DEF_VALUE = new File(System.getProperty("user.home"), "sysprefs");
 		globalEvalDisabled = Boolean.getBoolean(PROP_GLOBAL_EVAL_DISABLED_NAME);
-		String sourceDir = System.getProperty(PROP_SOURCE_DIR);
-		if (sourceDir != null) {
+		final String exp = System.getProperty(PROP_SOURCE_DIR);
+		if (exp != null) {
 			try {
-				sourceDir = new MapExpression(sourceDir).eval().get();
+				SOURCE_EXPR = new MapExpression(exp, null, CustomMapper.getInstance(), true);
 			} catch (InvalidExpression e) {
-				log.log(Level.WARNING, "Error in eval of " + sourceDir + ": " + e.toString());
-				sourceDir = null;
+				log.log(Level.WARNING, "Error in eval of " + exp + ": " + e.toString());
 			}
 		}
-		SOURCE_DIR = (sourceDir != null ? new File(sourceDir) : PROP_SOURCE_DIR_DEF_VALUE);
 	}
 
 	protected StandalonePreferences(final StandalonePreferences parent, final String name) {
 		super(parent, name);
+		SOURCE_DIR = getSourceDir();
 		fileName = getFileName();
 		file = new File(SOURCE_DIR, fileName + FILE_EXTENSION);
 		data = new StringProperties().getRootView();
 		load();
 		nodeEvalDisabled = Boolean.parseBoolean(data.getProperty(PROP_LOCAL_EVAL_DISABLED_NAME, "false"));
+	}
+
+	private final File getSourceDir() {
+		if (SOURCE_EXPR != null) {
+			try {
+				final StringBuilder sb = new StringBuilder();
+				SOURCE_EXPR.eval(sb); // Thread-Safe
+				return new File(sb.toString());
+			} catch (InvalidExpression e) {
+				final String exp = SOURCE_EXPR.getExpression();
+				log.log(Level.WARNING, "Error in eval of " + exp + ": " + e.toString());
+			}
+		}
+		return PROP_SOURCE_DIR_DEF_VALUE;
 	}
 
 	private final String getFileName() {

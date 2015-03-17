@@ -2,7 +2,7 @@
 
 Java Preferences API Implementation on Filesystem. Open Source Java project under Apache License v2.0
 
-### Current Stable Version is [1.0.4](https://search.maven.org/#search|ga|1|g%3Aorg.javastack%20a%3Astandalone-preferences)
+### Current Stable Version is [1.2.1](https://search.maven.org/#search|ga|1|g%3Aorg.javastack%20a%3Astandalone-preferences)
 
 ---
 
@@ -14,6 +14,7 @@ Java Preferences API Implementation on Filesystem. Open Source Java project unde
  - Config file per package.
  - System Preferences are supported, YES.
  - User Preferences are NOT supported (intentionally).
+ - Allow ClassLoaderMap properties in ```org.javastack.preferences.sourcedir```
 
 ## DOC
 
@@ -151,7 +152,7 @@ https://www.acme.com/search?user=developer
 #### Running in Tomcat
 
 ```
-Copy standalone-preferences-X.X.X.jar to ${catalina.home}/lib/
+Copy standalone-preferences-X.X.X.jar to ${CATALINA_HOME}/lib/
 You can set your CATALINA_OPTS="-Dorg.javastack.preferences.sourcedir=\${CATALINA_BASE}/appconf/ -Djava.util.prefs.PreferencesFactory=org.javastack.preferences.StandalonePreferencesFactory"
 ```
 
@@ -185,7 +186,7 @@ Add the dependency to your pom.xml:
     <dependency>
         <groupId>org.javastack</groupId>
         <artifactId>standalone-preferences</artifactId>
-        <version>1.0.4</version>
+        <version>1.2.1</version>
         <scope>provided</scope>
     </dependency>
 
