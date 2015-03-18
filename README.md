@@ -165,7 +165,7 @@ You can set your CATALINA_OPTS="-Dorg.javastack.preferences.sourcedir=\${CATALIN
 -Djava.util.prefs.PreferencesFactory=org.javastack.preferences.StandalonePreferencesFactory
 ```
 
-###### Note: If you want use servlet.ContetxName you need [ClassLoaderMap](https://github.com/ggrandes/classloadermap)
+###### Note: If you want use servlet.ContextName you need [ClassLoaderMap](https://github.com/ggrandes/classloadermap)
 
 #### Running Inside Spring
 
