@@ -149,7 +149,7 @@ https://www.acme.com
 https://www.acme.com/search?user=developer
 ```
 
-#### Running in Tomcat
+#### Running in Tomcat Standalone
 
 ```
 Copy standalone-preferences-X.X.X.jar to ${CATALINA_HOME}/lib/
@@ -157,6 +157,15 @@ You can set your CATALINA_OPTS="-Dorg.javastack.preferences.sourcedir=\${CATALIN
 ```
 
 ###### Note: Don't copy standalone-preferences-X.X.X.jar to your WEB-INF/lib/ (classloader problems)
+
+#### Running in Tomcat in Eclipse
+
+```
+-Dorg.javastack.preferences.sourcedir=${workspace_loc:/Servers}/appconf/$"{servlet.ContextName:noname}"
+-Djava.util.prefs.PreferencesFactory=org.javastack.preferences.StandalonePreferencesFactory
+```
+
+###### Note: If you want use servlet.ContetxName you need [ClassLoaderMap](https://github.com/ggrandes/classloadermap)
 
 #### Running Inside Spring
 
