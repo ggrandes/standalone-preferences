@@ -75,7 +75,7 @@ public class StandalonePreferences extends AbstractPreferences {
 	}
 
 	public boolean isStaled() {
-		if (globalStaleMillis <= 0)
+		if ((globalStaleMillis <= 0) || isDirty)
 			return false;
 		final long now = System.currentTimeMillis();
 		return (lastLoad + globalStaleMillis < now);
