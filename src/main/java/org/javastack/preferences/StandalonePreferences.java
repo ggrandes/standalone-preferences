@@ -75,10 +75,12 @@ public class StandalonePreferences extends AbstractPreferences {
 	}
 
 	public boolean isStaled() {
-		if ((globalStaleMillis <= 0) || isDirty)
-			return false;
-		final long now = System.currentTimeMillis();
-		return (lastLoad + globalStaleMillis < now);
+		synchronized (lock) {
+			if ((globalStaleMillis <= 0) || isDirty)
+				return false;
+			final long now = System.currentTimeMillis();
+			return (lastLoad + globalStaleMillis < now);
+		}
 	}
 
 	private final File getSourceDir() {
