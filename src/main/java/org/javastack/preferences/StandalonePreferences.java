@@ -34,10 +34,12 @@ public class StandalonePreferences extends AbstractPreferences {
 	private static final String packageName = StandalonePreferences.class.getPackage().getName();
 	private static final String PROP_SOURCE_DIR = packageName + ".sourcedir";
 	private static final String PROP_GLOBAL_EVAL_DISABLED_NAME = packageName + ".evalget.disabled";
+	private static final String PROP_GLOBAL_EXPIRE_MILLIS = packageName + ".stale.millis";
 	private static final String PROP_LOCAL_EVAL_DISABLED_NAME = "preferences.evalget.disabled";
 	private static final File PROP_SOURCE_DIR_DEF_VALUE;
 	private static MapExpression SOURCE_EXPR = null;
 	private static final boolean globalEvalDisabled;
+	private static final int globalStaleMillis;
 	private static final String ROOT_NAME = "ROOT";
 	private static final String FILE_EXTENSION = ".properties";
 	private final File SOURCE_DIR;
@@ -46,10 +48,12 @@ public class StandalonePreferences extends AbstractPreferences {
 	private final StringProperties data;
 	private boolean nodeEvalDisabled = false;
 	private boolean isDirty = false;
+	private long lastLoad = 0;
 
 	static {
 		PROP_SOURCE_DIR_DEF_VALUE = new File(System.getProperty("user.home"), "sysprefs");
 		globalEvalDisabled = Boolean.getBoolean(PROP_GLOBAL_EVAL_DISABLED_NAME);
+		globalStaleMillis = Integer.getInteger(PROP_GLOBAL_EXPIRE_MILLIS, 0);
 		final String exp = System.getProperty(PROP_SOURCE_DIR);
 		if (exp != null) {
 			try {
@@ -68,6 +72,13 @@ public class StandalonePreferences extends AbstractPreferences {
 		data = new StringProperties().getRootView();
 		load();
 		nodeEvalDisabled = Boolean.parseBoolean(data.getProperty(PROP_LOCAL_EVAL_DISABLED_NAME, "false"));
+	}
+
+	public boolean isStaled() {
+		if (globalStaleMillis <= 0)
+			return false;
+		final long now = System.currentTimeMillis();
+		return (lastLoad + globalStaleMillis < now);
 	}
 
 	private final File getSourceDir() {
@@ -104,6 +115,7 @@ public class StandalonePreferences extends AbstractPreferences {
 		try {
 			is = new FileInputStream(file);
 			data.getRootView().load(is);
+			lastLoad = System.currentTimeMillis();
 		} catch (IOException e) {
 			log.log(Level.WARNING, "Error loading StandalonePreferences from file " + //
 					file + ": " + e.toString());

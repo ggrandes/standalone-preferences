@@ -2,7 +2,7 @@
 
 Java Preferences API Implementation on Filesystem. Open Source Java project under Apache License v2.0
 
-### Current Stable Version is [1.2.1](https://search.maven.org/#search|ga|1|g%3Aorg.javastack%20a%3Astandalone-preferences)
+### Current Stable Version is [1.2.2](https://search.maven.org/#search|ga|1|g%3Aorg.javastack%20a%3Astandalone-preferences)
 
 ---
 
@@ -27,6 +27,8 @@ Java Preferences API Implementation on Filesystem. Open Source Java project unde
    - Example: -Dorg.javastack.preferences.sourcedir=${user.home}/myprefs/
    - Default value: ${user.home}/sysprefs/
  - For disable Eval of get (Global): ```org.javastack.preferences.evalget.disabled=true```
+ - For autoexpire cache of preferences (Global): ```org.javastack.preferences.stale.millis=180000```
+   - Default value: 0 (no expire)
 
 #### Configuration: Local Properties
 
@@ -195,7 +197,7 @@ Add the dependency to your pom.xml:
     <dependency>
         <groupId>org.javastack</groupId>
         <artifactId>standalone-preferences</artifactId>
-        <version>1.2.1</version>
+        <version>1.2.2</version>
         <scope>provided</scope>
     </dependency>
 

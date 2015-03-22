@@ -16,14 +16,14 @@ import java.util.prefs.PreferencesFactory;
  * @see StandalonePreferences
  */
 public class StandalonePreferencesFactory implements PreferencesFactory {
-	private static WeakHashMap<ClassLoader, Preferences> SYSTEM_ROOT = new WeakHashMap<ClassLoader, Preferences>();
-	private static EmptyPreferences USER_ROOT = new EmptyPreferences();
+	private WeakHashMap<ClassLoader, StandalonePreferences> SYSTEM_ROOT = new WeakHashMap<ClassLoader, StandalonePreferences>();
+	private EmptyPreferences USER_ROOT = new EmptyPreferences();
 
 	@Override
 	public synchronized Preferences systemRoot() {
 		final ClassLoader ctxLoader = Thread.currentThread().getContextClassLoader();
-		Preferences p = SYSTEM_ROOT.get(ctxLoader);
-		if (p == null) {
+		StandalonePreferences p = SYSTEM_ROOT.get(ctxLoader);
+		if ((p == null) || p.isStaled()) {
 			p = new StandalonePreferences(null, "");
 			SYSTEM_ROOT.put(ctxLoader, p);
 		}
