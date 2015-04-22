@@ -1,8 +1,8 @@
 # Standalone-Preferences
 
-Java Preferences API Implementation on Filesystem. Open Source Java project under Apache License v2.0
+Java Preferences API Implementation on Filesystem and HTTP-Client. Open Source Java project under Apache License v2.0
 
-### Current Stable Version is [1.2.2](https://search.maven.org/#search|ga|1|g%3Aorg.javastack%20a%3Astandalone-preferences)
+### Current Stable Version is [2.0.1](https://search.maven.org/#search|ga|1|g%3Aorg.javastack%20a%3Astandalone-preferences)
 
 ---
 
@@ -14,7 +14,9 @@ Java Preferences API Implementation on Filesystem. Open Source Java project unde
  - Config file per package.
  - System Preferences are supported, YES.
  - User Preferences are NOT supported (intentionally).
+ - Allow System properties in ```org.javastack.preferences.sourcedir```
  - Allow ClassLoaderMap properties in ```org.javastack.preferences.sourcedir```
+ - Allow URL in ```org.javastack.preferences.sourcedir``` (http/https)
 
 ## DOC
 
@@ -23,9 +25,10 @@ Java Preferences API Implementation on Filesystem. Open Source Java project unde
 
  - Standard Java Preferences API for select the factory: ```java.util.prefs.PreferencesFactory```
    - Example: -Djava.util.prefs.PreferencesFactory=org.javastack.preferences.StandalonePreferencesFactory
- - Select source of System Preferences: ```org.javastack.preferences.sourcedir=directoryName``` (allow evaluation)
-   - Example: -Dorg.javastack.preferences.sourcedir=${user.home}/myprefs/
-   - Default value: ${user.home}/sysprefs/
+ - Select source of System Preferences: ```org.javastack.preferences.sourcedir=directoryName``` (allow {placeholder} evaluation)
+   - Example Local: -Dorg.javastack.preferences.sourcedir={user.home}/myprefs/
+   - Example Remote: -Dorg.javastack.preferences.sourcedir=http://config.acme.com/{user.name}/
+   - Default value: {user.home}/sysprefs/
  - For disable Eval of get (Global): ```org.javastack.preferences.evalget.disabled=true```
  - For autoexpire cache of preferences (Global): ```org.javastack.preferences.stale.millis=180000```
    - Default value: 0 (no expire)
@@ -122,7 +125,7 @@ public enum ExampleEnum {
 
 #### Example Config 
 
-###### ```${user.home}/sysprefs/org.javastack.preferences.example.properties```
+###### ```{user.home}/sysprefs/org.javastack.preferences.example.properties```
 
 ```properties
 mykey=my-config-value
@@ -163,11 +166,11 @@ You can set your CATALINA_OPTS="-Dorg.javastack.preferences.sourcedir=\${CATALIN
 #### Running in Tomcat in Eclipse
 
 ```
--Dorg.javastack.preferences.sourcedir=${workspace_loc:/Servers}/appconf/$"{servlet.ContextName:noname}"
+-Dorg.javastack.preferences.sourcedir=${workspace_loc:/Servers}/appconf/{servlet.ContextName:noname}
 -Djava.util.prefs.PreferencesFactory=org.javastack.preferences.StandalonePreferencesFactory
 ```
 
-###### Note: If you want use servlet.ContextName you need [ClassLoaderMap](https://github.com/ggrandes/classloadermap)
+###### Note: If you want use ```servlet.ContextName``` you need [ClassLoaderMap](https://github.com/ggrandes/classloadermap)
 
 #### Running Inside Spring
 
@@ -197,7 +200,7 @@ Add the dependency to your pom.xml:
     <dependency>
         <groupId>org.javastack</groupId>
         <artifactId>standalone-preferences</artifactId>
-        <version>1.2.2</version>
+        <version>2.0.1</version>
         <scope>provided</scope>
     </dependency>
 
