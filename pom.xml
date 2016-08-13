@@ -68,6 +68,9 @@
 						<addMavenDescriptor>false</addMavenDescriptor>
 						<manifestEntries>
 							<Built-By>maven</Built-By>
+							<Implementation-Vendor>${project.groupId}</Implementation-Vendor>
+							<Implementation-Title>${project.groupId}:${project.artifactId}</Implementation-Title>
+							<Implementation-Version>${project.version}</Implementation-Version>
 						</manifestEntries>
 					</archive>
 					<excludes>
